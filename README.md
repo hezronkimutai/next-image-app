@@ -1,33 +1,19 @@
-# Image Component Example
+# Repo to demonstrate a next/image bug
 
-This example shows how to use the [Image Component in Next.js](https://nextjs.org/docs/api-reference/next/image) serve optimized, responsive images.
+## Installation
 
-The index page ([`pages/index.js`](pages/index.js)) has a couple images, one internal image and one external image. In [`next.config.js`](next.config.js), the `domains` property is used to enable external images. The other pages demonstrate the different layouts. Run or deploy the app to see how it works!
-
-## Live demo
-
-[https://image-component.nextjs.gallery/](https://image-component.nextjs.gallery/)
-
-## Preview
-
-Preview the example live on [StackBlitz](http://stackblitz.com/):
-
-[![Open in StackBlitz](https://developer.stackblitz.com/img/open_in_stackblitz.svg)](https://stackblitz.com/github/vercel/next.js/tree/canary/examples/image-component)
-
-## Deploy your own
-
-Deploy the example using [Vercel](https://vercel.com?utm_source=github&utm_medium=readme&utm_campaign=next-example):
-
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/git/external?repository-url=https://github.com/vercel/next.js/tree/canary/examples/image-component&project-name=image-component&repository-name=image-component)
-
-## How to use
-
-Execute [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app) with [npm](https://docs.npmjs.com/cli/init) or [Yarn](https://yarnpkg.com/lang/en/docs/cli/create/) to bootstrap the example:
-
-```bash
-npx create-next-app --example image-component image-app
-# or
-yarn create next-app --example image-component image-app
+```
+git clone git@github.com:inside/next-image-app.git
+cd next-image-app
+npm install
+npm run build && npm start
 ```
 
-Deploy it to the cloud with [Vercel](https://vercel.com/new?utm_source=github&utm_medium=readme&utm_campaign=next-example) ([Documentation](https://nextjs.org/docs/deployment)).
+## Steps To Reproduce
+
+1. Open this image in your browser:
+   [`http://localhost:3000/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fmountains.a2eb1d50.jpg&w=1920&q=75`](http://localhost:3000/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fmountains.a2eb1d50.jpg&w=1920&q=75)
+   => This is ok
+
+1. Now open this noexistent image in your browser (the word "mountains" from the above url has been renamed to "foo"): [`http://localhost:3000/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Ffoo.a2eb1d50.jpg&w=1920&q=75`](http://localhost:3000/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Ffoo.a2eb1d50.jpg&w=1920&q=75)
+   => This is not ok. The browser hangs for a long time and eventually returns a `504` http error
